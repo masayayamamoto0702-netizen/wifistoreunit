@@ -10,7 +10,7 @@ const PRODUCTS = [
     name:  "PILLS TEE",
     price: "¥6,600",
     tag:   "TEE",
-    img:   "/pills-tee.jpg",
+    img:   "/pills-tee.png",
     href:  "https://wifistoreunit.myshopify.com",
   },
   {
@@ -18,7 +18,7 @@ const PRODUCTS = [
     name:  "WIFI RADIO UNIT TEE",
     price: "¥6,600",
     tag:   "TEE",
-    img:   "/wifi-radio-tee.jpg",
+    img:   "/wifi-radio-tee.png",
     href:  "https://wifistoreunit.myshopify.com",
   },
   {
@@ -26,7 +26,7 @@ const PRODUCTS = [
     name:  "START TEE",
     price: "¥6,600",
     tag:   "TEE",
-    img:   "/start-tee.jpg",
+    img:   "/start-tee.png",
     href:  "https://wifistoreunit.myshopify.com",
   },
   {
@@ -34,7 +34,7 @@ const PRODUCTS = [
     name:  "GRID TEE",
     price: "¥6,600",
     tag:   "TEE",
-    img:   "/grid-tee.jpg",
+    img:   "/grid-tee.png",
     href:  "https://wifistoreunit.myshopify.com",
   },
   {
@@ -42,7 +42,7 @@ const PRODUCTS = [
     name:  "TECK TEE",
     price: "¥6,600",
     tag:   "TEE",
-    img:   "/teck-tee.jpg",
+    img:   "/teck-tee.png",
     href:  "https://wifistoreunit.myshopify.com",
   },
   {
@@ -50,8 +50,8 @@ const PRODUCTS = [
     name:    "BRAIN TEE",
     price:   "¥6,600",
     tag:     "TEE",
-    img:     "/brain-tee-front.jpg",
-    imgBack: "/brain-tee-back.jpg",
+    img:     "/brain-tee-front.png",
+    imgBack: "/brain-tee-back.png",
     href:    "https://wifistoreunit.myshopify.com",
   },
   // 商品を追加する場合はここに追記

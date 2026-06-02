@@ -680,20 +680,7 @@ body::after {
   display: block;
 }
 
-/* scanline overlay on image */
-.product-img::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: repeating-linear-gradient(
-    0deg,
-    transparent,
-    transparent 3px,
-    rgba(0,0,0,0.18) 3px,
-    rgba(0,0,0,0.18) 4px
-  );
-  pointer-events: none;
-}
+/* scanline removed */
 
 .product-no-img {
   display: flex;
