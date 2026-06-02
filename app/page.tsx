@@ -1,8 +1,9 @@
 import dynamic from "next/dynamic";
-import BootSequence   from "@/components/system/BootSequence";
-import SystemNav      from "@/components/system/SystemNav";
+import BootSequence    from "@/components/system/BootSequence";
+import SystemNav       from "@/components/system/SystemNav";
+import ProductCarousel from "@/components/sections/ProductCarousel";
 import TransmissionLog from "@/components/sections/TransmissionLog";
-import NodeAccess     from "@/components/sections/NodeAccess";
+import NodeAccess      from "@/components/sections/NodeAccess";
 
 const HeroSection = dynamic(
   () => import("@/components/hero/HeroSection"),
@@ -27,6 +28,7 @@ export default function Page() {
       {/* ── Main Interface ── */}
       <main>
         <HeroSection />
+        <ProductCarousel />
         <TransmissionLog />
         <NodeAccess />
       </main>
