@@ -45,6 +45,14 @@ const PRODUCTS = [
     img:   "/teck-tee.jpg",
     href:  "https://wifistoreunit.myshopify.com",
   },
+  {
+    id:    "WSU-006",
+    name:  "BRAIN TEE",
+    price: "¥6,600",
+    tag:   "TEE",
+    img:   "/brain-tee.jpg",
+    href:  "https://wifistoreunit.myshopify.com",
+  },
   // 商品を追加する場合はここに追記
 ];
 
