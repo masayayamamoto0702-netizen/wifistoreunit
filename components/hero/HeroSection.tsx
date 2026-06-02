@@ -124,11 +124,11 @@ function WifiSTL() {
         onPointerOut={() =>  { document.body.style.cursor = "auto"; }}
       >
         <meshStandardMaterial
-          color="#d8d8d8"
-          emissive="#aaaaaa"
-          emissiveIntensity={0.12}
-          metalness={0.96}
-          roughness={0.04}
+          color="#ffffff"
+          emissive="#ffffff"
+          emissiveIntensity={0.08}
+          metalness={0.1}
+          roughness={0.08}
           side={THREE.DoubleSide}
         />
       </mesh>
