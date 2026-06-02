@@ -37,6 +37,14 @@ const PRODUCTS = [
     img:   "/grid-tee.jpg",
     href:  "https://wifistoreunit.myshopify.com",
   },
+  {
+    id:    "WSU-005",
+    name:  "TECK TEE",
+    price: "¥6,600",
+    tag:   "TEE",
+    img:   "/teck-tee.jpg",
+    href:  "https://wifistoreunit.myshopify.com",
+  },
   // 商品を追加する場合はここに追記
 ];
 
