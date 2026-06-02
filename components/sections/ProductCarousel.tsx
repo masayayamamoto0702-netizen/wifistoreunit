@@ -46,12 +46,13 @@ const PRODUCTS = [
     href:  "https://wifistoreunit.myshopify.com",
   },
   {
-    id:    "WSU-006",
-    name:  "BRAIN TEE",
-    price: "¥6,600",
-    tag:   "TEE",
-    img:   "/brain-tee.jpg",
-    href:  "https://wifistoreunit.myshopify.com",
+    id:      "WSU-006",
+    name:    "BRAIN TEE",
+    price:   "¥6,600",
+    tag:     "TEE",
+    img:     "/brain-tee-front.jpg",
+    imgBack: "/brain-tee-back.jpg",
+    href:    "https://wifistoreunit.myshopify.com",
   },
   // 商品を追加する場合はここに追記
 ];
@@ -102,15 +103,42 @@ export default function ProductCarousel() {
               rel="noopener noreferrer"
               className="product-card"
             >
-              {/* Product image */}
+              {/* Image area */}
               <div className="product-img">
+                {/* Front image */}
                 <Image
                   src={item.img}
                   alt={item.name}
                   width={260}
                   height={347}
-                  style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }}
+                  style={{
+                    width: "100%",
+                    height: "100%",
+                    objectFit: "cover",
+                    display: "block",
+                    position: "absolute",
+                    inset: 0,
+                    transition: "opacity 0.45s ease",
+                  }}
                 />
+                {/* Back image (hover reveal) */}
+                {item.imgBack && (
+                  <Image
+                    src={item.imgBack}
+                    alt={`${item.name} back`}
+                    width={260}
+                    height={347}
+                    className="product-img-back"
+                    style={{
+                      width: "100%",
+                      height: "100%",
+                      objectFit: "cover",
+                      display: "block",
+                      position: "absolute",
+                      inset: 0,
+                    }}
+                  />
+                )}
               </div>
 
               {/* Info */}
