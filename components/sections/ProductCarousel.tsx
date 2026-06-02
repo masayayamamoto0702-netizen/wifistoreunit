@@ -41,7 +41,7 @@ export default function ProductCarousel() {
           letterSpacing: "0.2em",
           color: "rgba(255,255,255,0.15)",
         }}>
-          CATALOG_VERSION: 1.0 // ITEMS_DETECTED: {PRODUCTS.length} // STATUS: PENDING_UPLOAD
+          CATALOG_VERSION: 1.0 {"//"} ITEMS_DETECTED: {PRODUCTS.length} {"//"} STATUS: PENDING_UPLOAD
         </div>
       </div>
 
