@@ -54,27 +54,6 @@ export default function SystemNav() {
       </div>
 
       <div className="sys-nav-right">
-        <a
-          href="https://wifistoreunit.stores.jp/"
-          target="_blank"
-          rel="noopener noreferrer"
-          style={{
-            fontFamily: "var(--mono)",
-            fontSize: 9,
-            letterSpacing: "0.20em",
-            color: "#000",
-            background: "var(--amber)",
-            textDecoration: "none",
-            padding: "5px 13px",
-            whiteSpace: "nowrap",
-            transition: "opacity 0.2s",
-          }}
-          onMouseEnter={e => (e.currentTarget.style.opacity = "0.8")}
-          onMouseLeave={e => (e.currentTarget.style.opacity = "1")}
-        >
-          ENTER SHOP
-        </a>
-
         <span style={{ fontFamily: "var(--mono)", fontSize: 10, letterSpacing: "0.12em", color: "var(--txt-lo)" }}>
           {time}
         </span>

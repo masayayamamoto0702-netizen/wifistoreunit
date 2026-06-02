@@ -55,37 +55,6 @@ export default function NodeAccess() {
             <div style={{ marginTop: 24 }}>
               <div className="node-col-title">ACCESS</div>
 
-              {/* Shop link */}
-              <a
-                href="https://wifistoreunit.stores.jp/"
-                target="_blank"
-                rel="noopener noreferrer"
-                style={{
-                  display: "inline-flex",
-                  alignItems: "center",
-                  gap: 10,
-                  marginTop: 8,
-                  marginBottom: 8,
-                  fontFamily: "var(--mono)",
-                  fontSize: 11,
-                  letterSpacing: "0.15em",
-                  color: "#000",
-                  background: "var(--amber)",
-                  textDecoration: "none",
-                  padding: "9px 14px",
-                  transition: "opacity 0.2s",
-                }}
-                onMouseEnter={e => (e.currentTarget.style.opacity = "0.8")}
-                onMouseLeave={e => (e.currentTarget.style.opacity = "1")}
-              >
-                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                  <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/>
-                  <line x1="3" y1="6" x2="21" y2="6"/>
-                  <path d="M16 10a4 4 0 01-8 0"/>
-                </svg>
-                ENTER SHOP
-              </a>
-
               {/* Instagram link */}
               <a
                 href="https://www.instagram.com/wifi.store.unit"
