@@ -636,31 +636,59 @@ body::after {
 .product-card {
   width: 260px;
   flex-shrink: 0;
-  border: 1px solid rgba(255,140,0,0.15);
-  background: rgba(255,255,255,0.02);
+  border: none;
+  background: transparent;
   cursor: pointer;
-  transition: border-color 0.25s, background 0.25s;
+  transition: transform 0.3s ease;
   text-decoration: none;
   color: inherit;
   display: block;
 }
 
 .product-card:hover {
-  border-color: rgba(255,140,0,0.55);
-  background: rgba(255,140,0,0.04);
+  transform: translateY(-4px);
 }
 
-/* Placeholder image area */
+/* Image area */
 .product-img {
   width: 100%;
   aspect-ratio: 3 / 4;
   background: #0a0a0a;
-  border-bottom: 1px solid rgba(255,140,0,0.10);
+  border: none;
   position: relative;
   overflow: hidden;
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+/* Spotlight from below — upward glow */
+.product-img::before {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 80%;
+  height: 55%;
+  background: radial-gradient(
+    ellipse at bottom,
+    rgba(255, 255, 255, 0.18) 0%,
+    rgba(255, 255, 255, 0.06) 40%,
+    transparent 70%
+  );
+  pointer-events: none;
+  z-index: 2;
+}
+
+/* Spotlight intensifies on hover */
+.product-card:hover .product-img::before {
+  background: radial-gradient(
+    ellipse at bottom,
+    rgba(255, 255, 255, 0.32) 0%,
+    rgba(255, 255, 255, 0.10) 40%,
+    transparent 70%
+  );
 }
 
 /* Back image — hidden by default, fades in on card hover */
@@ -706,7 +734,8 @@ body::after {
 }
 
 .product-info {
-  padding: 14px 16px 16px;
+  padding: 14px 12px 18px;
+  text-align: center;
 }
 
 .product-tag {
@@ -723,10 +752,7 @@ body::after {
   font-size: 11px;
   letter-spacing: 0.1em;
   color: rgba(255,255,255,0.85);
-  margin-bottom: 8px;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  margin-bottom: 6px;
 }
 
 .product-price {
