@@ -13,6 +13,14 @@ const PRODUCTS = [
     img:   "/pills-tee.jpg",
     href:  "https://wifistoreunit.myshopify.com",
   },
+  {
+    id:    "WSU-002",
+    name:  "WIFI RADIO UNIT TEE",
+    price: "¥6,600",
+    tag:   "TEE",
+    img:   "/wifi-radio-tee.jpg",
+    href:  "https://wifistoreunit.myshopify.com",
+  },
   // 商品を追加する場合はここに追記
 ];
 
