@@ -10,8 +10,9 @@ const PRODUCTS = [
     name:  "PILLS TEE",
     price: "¥6,600",
     tag:   "TEE",
-    img:   "/pills-tee.jpg",
-    href:  "https://wifistoreunit.myshopify.com",
+    img:     "/pills-tee.jpg",
+    imgBack: "/pills-tee-black.jpg",
+    href:    "https://wifistoreunit.myshopify.com",
   },
   {
     id:    "WSU-002",
