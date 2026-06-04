@@ -119,7 +119,7 @@ function WifiSTL() {
       <mesh
         geometry={geo}
         scale={[modelScale, modelScale, modelScale]}
-        onClick={() => window.open("https://wifistoreunit.stores.jp/", "_blank", "noopener,noreferrer")}
+        onClick={() => window.open("https://wifistoreunit.myshopify.com", "_blank", "noopener,noreferrer")}
         onPointerOver={() => { document.body.style.cursor = "pointer"; }}
         onPointerOut={() =>  { document.body.style.cursor = "auto"; }}
       >
