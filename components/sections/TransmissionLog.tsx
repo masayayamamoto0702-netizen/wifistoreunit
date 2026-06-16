@@ -70,39 +70,6 @@ export default function TransmissionLog() {
           />
         </div>
 
-        {/* WSU UNIT CODE — terminal minesweeper */}
-        <div style={{
-          border: "1px solid rgba(255,140,0,0.15)",
-          marginBottom: 40,
-        }}>
-          <div style={{
-            display: "flex",
-            alignItems: "center",
-            gap: 12,
-            padding: "10px 16px",
-            borderBottom: "1px solid rgba(255,140,0,0.10)",
-            fontFamily: "var(--mono)",
-            fontSize: 9,
-            letterSpacing: "0.26em",
-            color: "var(--txt-lo)",
-            background: "rgba(255,140,0,0.03)",
-          }}>
-            <span className="status-dot" style={{ background: "var(--green)" }} />
-            <span style={{ color: "var(--amber)" }}>WSU_UNIT_CODE</span>
-            <span style={{ opacity: 0.4 }}>{"//"}</span>
-            <span>INTERACTIVE TERMINAL</span>
-            <div style={{ flex: 1, height: 1, background: "rgba(255,140,0,0.08)" }} />
-            <span>ENCRYPTED</span>
-          </div>
-          <iframe
-            src="/unit-code.html"
-            width="100%"
-            height="600"
-            style={{ display: "block", border: "none" }}
-            title="WSU UNIT CODE"
-          />
-        </div>
-
         {/* Broadcast header */}
         <div className="transmission-header">
           <div className="live-badge">
@@ -190,6 +157,37 @@ export default function TransmissionLog() {
         </div>
 
       </div>
+
+      {/* WSU UNIT CODE — 全幅ターミナルゲーム */}
+      <div style={{ borderTop: "1px solid rgba(255,140,0,0.15)", marginTop: 40 }}>
+        <div style={{
+          display: "flex",
+          alignItems: "center",
+          gap: 12,
+          padding: "10px 40px",
+          borderBottom: "1px solid rgba(255,140,0,0.10)",
+          fontFamily: "var(--mono)",
+          fontSize: 9,
+          letterSpacing: "0.26em",
+          color: "var(--txt-lo)",
+          background: "rgba(255,140,0,0.03)",
+        }}>
+          <span className="status-dot" style={{ background: "var(--green)" }} />
+          <span style={{ color: "var(--amber)" }}>WSU_UNIT_CODE</span>
+          <span style={{ opacity: 0.4 }}>{"//"}</span>
+          <span>INTERACTIVE TERMINAL</span>
+          <div style={{ flex: 1, height: 1, background: "rgba(255,140,0,0.08)" }} />
+          <span>ENCRYPTED</span>
+        </div>
+        <iframe
+          src="/unit-code.html"
+          width="100%"
+          height="620"
+          style={{ display: "block", border: "none" }}
+          title="WSU UNIT CODE"
+        />
+      </div>
+
     </section>
   );
 }
