@@ -246,6 +246,23 @@
   }
   .overlay-btn:hover { border-color: var(--signal); color: var(--signal); box-shadow: 0 0 20px rgba(0,255,140,0.12); }
 
+  .share-btn {
+    background: var(--signal);
+    border: none;
+    color: #000;
+    font-family: 'Space Mono', monospace;
+    font-weight: 700;
+    font-size: 11px;
+    letter-spacing: 0.3em;
+    padding: 14px 32px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    transition: opacity 0.15s;
+  }
+  .share-btn:hover { opacity: 0.85; }
+
   /* difficulty selector */
   .diff-row { display: flex; gap: 10px; }
 
@@ -750,6 +767,16 @@
   <div id="endRankWrap" style="display:none;width:100%;max-width:360px;margin-bottom:4px;">
     <div id="endRankingBody" style="background:transparent;"></div>
   </div>
+  <div id="shareWrap" style="display:none;">
+    <button class="share-btn" onclick="shareToStory()">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+        <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
+        <circle cx="12" cy="12" r="4"/>
+        <circle cx="17.5" cy="6.5" r="1.2" fill="currentColor" stroke="none"/>
+      </svg>
+      SHARE TO STORY
+    </button>
+  </div>
   <div style="display:flex;gap:12px;">
     <button class="overlay-btn" onclick="restartGame()">RE-DEPLOY</button>
     <button class="overlay-btn" onclick="showStart()">MENU</button>
@@ -1126,6 +1153,135 @@ function showEnd(won) {
   } else {
     if (wrap) wrap.style.display = 'none';
   }
+  // SHAREボタン: クリア時のみ表示
+  const shareWrap = document.getElementById('shareWrap');
+  if (shareWrap) shareWrap.style.display = won ? 'block' : 'none';
+}
+
+function shareToStory() {
+  const canvas = document.createElement('canvas');
+  canvas.width  = 1080;
+  canvas.height = 1920;
+  const ctx = canvas.getContext('2d');
+
+  // Background
+  ctx.fillStyle = '#0a0a0a';
+  ctx.fillRect(0, 0, 1080, 1920);
+
+  // Grid scanlines
+  ctx.strokeStyle = 'rgba(0,255,140,0.03)';
+  ctx.lineWidth = 1;
+  for (let y = 0; y < 1920; y += 6) {
+    ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(1080, y); ctx.stroke();
+  }
+
+  // Top label
+  ctx.fillStyle = 'rgba(0,255,140,0.4)';
+  ctx.font = '28px "Courier New", monospace';
+  ctx.letterSpacing = '0.4em';
+  ctx.textAlign = 'center';
+  ctx.fillText('WIFI STORE UNIT', 540, 220);
+
+  // WSU UNIT CODE label
+  ctx.fillStyle = 'rgba(255,255,255,0.2)';
+  ctx.font = '20px "Courier New", monospace';
+  ctx.fillText('WSU_UNIT_CODE // INTERACTIVE TERMINAL', 540, 270);
+
+  // Divider
+  ctx.strokeStyle = 'rgba(0,255,140,0.2)';
+  ctx.lineWidth = 1;
+  ctx.beginPath(); ctx.moveTo(80, 310); ctx.lineTo(1000, 310); ctx.stroke();
+
+  // CLEARED
+  ctx.fillStyle = '#00ff8c';
+  ctx.font = 'bold 160px "Courier New", monospace';
+  ctx.textAlign = 'center';
+  ctx.fillText('CLEARED', 540, 580);
+
+  // Glow effect
+  ctx.shadowColor = '#00ff8c';
+  ctx.shadowBlur = 60;
+  ctx.fillStyle = 'rgba(0,255,140,0.15)';
+  ctx.fillText('CLEARED', 540, 580);
+  ctx.shadowBlur = 0;
+
+  // Stats
+  const timeEl   = document.getElementById('res-time');
+  const flagsEl  = document.getElementById('res-flags');
+  const diffEl   = document.getElementById('res-diff');
+  const timeVal  = timeEl  ? timeEl.textContent  : '-';
+  const flagsVal = flagsEl ? flagsEl.textContent : '-';
+  const diffVal  = diffEl  ? diffEl.textContent  : '-';
+
+  const stats = [
+    { label: 'TIME',       value: timeVal },
+    { label: 'FLAGS',      value: flagsVal },
+    { label: 'DIFFICULTY', value: diffVal },
+  ];
+
+  stats.forEach((s, i) => {
+    const x = 180 + i * 360;
+    ctx.fillStyle = '#00ff8c';
+    ctx.font = 'bold 64px "Courier New", monospace';
+    ctx.textAlign = 'center';
+    ctx.fillText(s.value, x, 780);
+    ctx.fillStyle = 'rgba(255,255,255,0.3)';
+    ctx.font = '22px "Courier New", monospace';
+    ctx.fillText(s.label, x, 830);
+  });
+
+  // Divider
+  ctx.strokeStyle = 'rgba(0,255,140,0.15)';
+  ctx.lineWidth = 1;
+  ctx.beginPath(); ctx.moveTo(80, 880); ctx.lineTo(1000, 880); ctx.stroke();
+
+  // Flavor text
+  ctx.fillStyle = 'rgba(255,255,255,0.25)';
+  ctx.font = '26px "Courier New", monospace';
+  ctx.textAlign = 'center';
+  ctx.fillText('SIGNAL AUTHENTICATED', 540, 960);
+  ctx.fillText('NODE HANDSHAKE COMPLETE', 540, 1005);
+
+  // Instagram handle
+  ctx.fillStyle = 'rgba(0,255,140,0.7)';
+  ctx.font = '36px "Courier New", monospace';
+  ctx.fillText('@WIFI.STORE.UNIT', 540, 1700);
+
+  ctx.fillStyle = 'rgba(255,255,255,0.15)';
+  ctx.font = '22px "Courier New", monospace';
+  ctx.fillText('wifistoreunit.myshopify.com', 540, 1750);
+
+  // Bottom border
+  ctx.strokeStyle = 'rgba(0,255,140,0.2)';
+  ctx.lineWidth = 1;
+  ctx.beginPath(); ctx.moveTo(80, 1800); ctx.lineTo(1000, 1800); ctx.stroke();
+  ctx.fillStyle = 'rgba(255,255,255,0.1)';
+  ctx.font = '18px "Courier New", monospace';
+  ctx.fillText('WIFI STORE UNIT // WSU-NET-001 // ALWAYS_TRANSMITTING', 540, 1840);
+
+  // Share or download
+  canvas.toBlob(async (blob) => {
+    const file = new File([blob], 'wsu-cleared.png', { type: 'image/png' });
+    if (navigator.canShare && navigator.canShare({ files: [file] })) {
+      try {
+        await navigator.share({
+          files: [file],
+          title: 'WSU UNIT CODE — CLEARED',
+        });
+      } catch(e) {
+        if (e.name !== 'AbortError') downloadCanvas(canvas);
+      }
+    } else {
+      downloadCanvas(canvas);
+    }
+  }, 'image/png');
+}
+
+function downloadCanvas(canvas) {
+  const a = document.createElement('a');
+  a.href = canvas.toDataURL('image/png');
+  a.download = 'wsu-cleared.png';
+  a.click();
 }
 
 function startTimer() {
