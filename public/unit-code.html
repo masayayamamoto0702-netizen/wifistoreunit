@@ -292,7 +292,7 @@
   }
   .ranking-header {
     display: grid;
-    grid-template-columns: 28px 1fr 72px 72px;
+    grid-template-columns: 28px 1fr 72px;
     padding: 6px 10px;
     border-bottom: 1px solid var(--border);
     font-size: 8px;
@@ -301,7 +301,7 @@
   }
   .ranking-row {
     display: grid;
-    grid-template-columns: 28px 1fr 72px 72px;
+    grid-template-columns: 28px 1fr 72px;
     padding: 7px 10px;
     border-bottom: 1px solid #161616;
     font-size: 10px;
@@ -650,7 +650,7 @@
   .inline-rank #rankingBody { background: transparent; }
   .inline-rank .ranking-row {
     display: grid;
-    grid-template-columns: 24px 1fr 64px 52px;
+    grid-template-columns: 24px 1fr 64px;
     padding: 5px 4px;
     border: none;
     border-bottom: 1px solid #0d1a0d;
@@ -663,7 +663,7 @@
   .inline-rank .ranking-row:hover { background: rgba(0,80,30,0.1); }
   .inline-rank .ranking-header {
     display: grid;
-    grid-template-columns: 24px 1fr 64px 52px;
+    grid-template-columns: 24px 1fr 64px;
     padding: 4px 4px;
     font-family: 'Press Start 2P', monospace;
     font-size: 6px;
@@ -747,6 +747,9 @@
     </div>
     <div id="submitMsg" style="font-size:9px;letter-spacing:0.2em;color:var(--signal);min-height:16px;"></div>
   </div>
+  <div id="endRankWrap" style="display:none;width:100%;max-width:360px;margin-bottom:4px;">
+    <div id="endRankingBody" style="background:transparent;"></div>
+  </div>
   <div style="display:flex;gap:12px;">
     <button class="overlay-btn" onclick="restartGame()">RE-DEPLOY</button>
     <button class="overlay-btn" onclick="showStart()">MENU</button>
@@ -826,7 +829,7 @@ function setDiff(d, itemEl) {
 function showStart() {
   document.getElementById('endOverlay').classList.add('hidden');
   document.getElementById('startOverlay').classList.remove('hidden');
-  if (window.storage) loadRanking(currentRankTab);
+  loadRanking(currentRankTab);
 }
 
 function startGame() {
@@ -850,6 +853,8 @@ function initGame() {
   flagMode = false;
   document.getElementById('flagToggle').classList.remove('on');
   updateTimer();
+  const endWrap = document.getElementById('endRankWrap');
+  if (endWrap) endWrap.style.display = 'none';
 
   const cfg = DIFFICULTIES[diff];
   const { cols, rows, mines } = cfg;
@@ -1154,22 +1159,38 @@ let currentRankTab = 'easy';
 let lastWonSeconds = 0;
 let lastWonDiff = '';
 
-async function loadRanking(d) {
+function loadRanking(d) {
   const body = document.getElementById('rankingBody');
   if (!body) return;
-  if (!window.storage) {
-    body.innerHTML = '<div class="ranking-empty">STORAGE UNAVAILABLE</div>';
-    return;
-  }
   body.innerHTML = '<div class="ranking-loading">SCANNING...</div>';
   try {
-    const key = 'ranking_' + d;
-    const result = await window.storage.get(key, true);
-    const entries = result ? JSON.parse(result.value) : [];
+    const key = 'wsu_ranking_' + d;
+    let entries = [];
+    try { entries = JSON.parse(localStorage.getItem(key) || '[]'); } catch(e) {}
     renderRanking(entries);
   } catch(e) {
     renderRanking([]);
   }
+}
+
+function renderRankingInEl(entries, body, highlightName) {
+  if (!body) return;
+  const pf = "Press Start 2P";
+  if (!entries || entries.length === 0) {
+    body.innerHTML = `<div style="font-family:'${pf}',monospace;font-size:7px;color:var(--dim);text-align:center;padding:8px;">NO DATA</div>`;
+    return;
+  }
+  body.innerHTML = `<div style="font-family:'${pf}',monospace;font-size:6px;color:var(--dim);letter-spacing:0.2em;text-align:center;margin-bottom:6px;">— TOP SCORES —</div>` +
+    entries.map((e, i) => {
+      const isMe = highlightName && e.name === highlightName;
+      const color = isMe ? '#00ff5a' : '#006630';
+      const medal = String(i+1).padStart(2,'0');
+      return `<div style="display:grid;grid-template-columns:24px 1fr 60px;padding:4px 2px;font-family:'${pf}',monospace;font-size:7px;color:${color};border-bottom:1px solid #1a1a1a;">
+        <span>${medal}</span>
+        <span>${(e.name||'???').substring(0,10)}</span>
+        <span style="text-align:right">${formatTime(e.time)}</span>
+      </div>`;
+    }).join('');
 }
 
 function renderRanking(entries) {
@@ -1181,12 +1202,11 @@ function renderRanking(entries) {
   }
   body.innerHTML = entries.slice(0, 10).map((e, i) => {
     const rankClass = i === 0 ? 'gold' : i === 1 ? 'silver' : i === 2 ? 'bronze' : '';
-    const medal = i === 0 ? '01' : i === 1 ? '02' : i === 2 ? '03' : String(i+1).padStart(2,'0');
+    const medal = String(i+1).padStart(2,'0');
     return `<div class="ranking-row">
       <span class="rank-num ${rankClass}">${medal}</span>
       <span>${(e.name||'???').substring(0,12)}</span>
       <span class="rank-time">${formatTime(e.time)}</span>
-      <span class="rank-date">${e.date||''}</span>
     </div>`;
   }).join('');
 }
@@ -1199,32 +1219,31 @@ function switchRankTab(d, el) {
   loadRanking(d);
 }
 
-async function submitScore() {
+function submitScore() {
   const name = (document.getElementById('nameInput').value || '').trim().toUpperCase() || 'ANON';
   const msg = document.getElementById('submitMsg');
-  if (!window.storage) {
-    msg.textContent = 'STORAGE UNAVAILABLE';
-    return;
-  }
   msg.textContent = 'SUBMITTING...';
   try {
-    const key = 'ranking_' + lastWonDiff;
+    const key = 'wsu_ranking_' + lastWonDiff;
     let entries = [];
-    try {
-      const result = await window.storage.get(key, true);
-      if (result) entries = JSON.parse(result.value);
-    } catch(e) {}
-    const today = new Date();
-    const dateStr = (today.getMonth()+1).toString().padStart(2,'0') + '/' + today.getDate().toString().padStart(2,'0');
-    entries.push({ name, time: lastWonSeconds, date: dateStr });
+    try { entries = JSON.parse(localStorage.getItem(key) || '[]'); } catch(e) {}
+    entries.push({ name, time: lastWonSeconds });
     entries.sort((a, b) => a.time - b.time);
     entries = entries.slice(0, 50);
-    await window.storage.set(key, JSON.stringify(entries), true);
+    localStorage.setItem(key, JSON.stringify(entries));
     msg.textContent = 'REGISTERED // ' + name;
     document.getElementById('nameInputWrap').style.display = 'none';
-    if (currentRankTab === lastWonDiff) loadRanking(lastWonDiff);
+    try {
+      const endWrap = document.getElementById('endRankWrap');
+      const endBody = document.getElementById('endRankingBody');
+      if (endWrap && endBody) {
+        endWrap.style.display = 'block';
+        renderRankingInEl(entries.slice(0, 5), endBody, name);
+      }
+    } catch(e) {}
+    loadRanking(lastWonDiff);
   } catch(e) {
-    msg.textContent = 'ERROR // TRY AGAIN';
+    msg.textContent = 'ERR: ' + (e && e.message ? e.message : String(e));
   }
 }
 
@@ -1232,11 +1251,7 @@ async function submitScore() {
 
 // Load on page init
 window.addEventListener('load', () => {
-  if (window.storage) loadRanking(currentRankTab);
-  else {
-    const body = document.getElementById('rankingBody');
-    if (body) body.innerHTML = '<div class="ranking-empty">STORAGE UNAVAILABLE</div>';
-  }
+  loadRanking(currentRankTab);
 });
 
 
